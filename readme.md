@@ -45,9 +45,32 @@ hence you will need:
 - A glue catalog with a predefined database is also expected, just [create a DB](https://docs.aws.amazon.com/glue/latest/dg/start-data-catalog.html), nothing else.
 - Redshift spectrum cluster linked to our glue catalog. Please follow these [steps.](https://docs.aws.amazon.com/redshift/latest/dg/querying-iceberg.html)
 
-## Benchmark
+## Outcome/Benchmark
 
-TODO
+S3 partition strategy: days(login_time), bucket(128, user_id) 
+
+```shell
+/data/time_day=2023-09-14/element_id_bucket=90/00002-10-e6831803-7cb4-4a2a-ad3f-ee3f1bc4f730-00001.parquet
+```
+### S3
+| **Metric**                  | **Value**  | **Comments**                                         |  
+|-------------------------|--------|--------------------------------------------------|
+| Objects                 | ~80000 |                                                  |
+| Daily parquet file size | ~650Kb | Maybe not the best size (Small size problem)     |
+| Bucket total size       | ~32 GB | 100Mb Metadata + (85MB*128 buckets) *day of data |
+| #S3 requests            | ~80000 |                                                  |
+|  Cost                       |  ~1.2 $      |     ~0.5$ (~80000 puts $0.0054 * 1000) + 0.784$ (32 * $0.0245 per GB) https://aws.amazon.com/s3/pricing/                                             | 
+
+### Fetching data
+
+Fetch all user clicks given a element-id within a date range:
+
+| Fetch tool  | Latency (2 months)  |  Data scanned (2 months) | Latency (1 year)  | Data scanned (1 year)  |                                           |
+|---|---|---|---|---|-------------------------------------------|
+|  Athena (sdk client) | ~5/6s  | 18 MB  | ~5/6s  | 68 MB  |                                           |
+| Spark (client)  | 20-40 sec  |  139 MB |  20-40 sec | 223 MB  |                                           |
+| Redshift Spectrum (sdk client)  | ~5/6s  |   | ~7/8s  |   | without redshift serverless with defaults |
+
 
 ## Trade-off analysis
 
