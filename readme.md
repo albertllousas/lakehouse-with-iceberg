@@ -65,7 +65,7 @@ S3 partition strategy: days(login_time), bucket(128, user_id)
 
 Fetch all user clicks given a element-id within a date range:
 
-| Fetch tool  | Latency (2 months)  |  Data scanned (2 months) | Latency (1 year)  | Data scanned (1 year)  |                                           |
+| Fetch tool  | Latency (2 months)  |  Data scanned (2 months) | Latency (1 year)  | Data scanned (1 year)  | Comments                                  |
 |---|---|---|---|---|-------------------------------------------|
 |  Athena (sdk client) | ~5/6s  | 18 MB  | ~5/6s  | 68 MB  |                                           |
 | Spark (client)  | 20-40 sec  |  139 MB |  20-40 sec | 223 MB  |                                           |
