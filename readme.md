@@ -3,7 +3,7 @@
 ## Description
 
 This project explores and assess apache **Iceberg** as a backbone to implement a **lake-house approach** to store and access  
-huge amounts of raw data produced in a some tech company.
+huge amounts of raw data produced in an imaginary tech company.
 
 As a business driving use-case the project will try to full-fill the following **usecase**:
 - We need to store **6 millions of user clicks per day**, of course, it needs to scale, we are ambitious.
@@ -72,11 +72,16 @@ Fetch all user clicks given a element-id within a date range:
 | Redshift Spectrum (sdk client)  | ~5/6s  |   | ~7/8s  |   | without redshift serverless with defaults |
 
 
-## Trade-off analysis
+#### Trade-off analysis
 
-TODO
 
-add challeges pros cons seamless etc
+| **Fetch tool** | **Pros**                                                                                              | **Cons**                                                                                                                          |       
+|---|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Athena | - Latency (sec) <br/> - Serverless service <br/> - Iceberg seamless integration <br/> - SQL interface | - Potential bottleneck since it is a shared resource ([quotas](https://docs.aws.amazon.com/athena/latest/ug/service-limits.html)) | 
+| Spark | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/> - SQL interface                    | - Latency (min) <br/>                                                                                                             |
+| Redshift Spectrum | - Latency (sec) <br/> - Iceberg seamless integration <br/> - SQL interface                                                                 | - Requires cluster management and cfg <br/> - Extra [cost](https://aws.amazon.com/redshift/pricing/)                                                                      |
+
+
 
 ## Next Steps
 
