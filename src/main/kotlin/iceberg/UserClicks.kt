@@ -3,7 +3,7 @@ package iceberg
 import com.github.javafaker.Faker
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 import kotlin.random.Random
 
 data class UserClick(

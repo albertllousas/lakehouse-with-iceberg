@@ -76,6 +76,8 @@ Fetch all user clicks given a element-id within a date range:
 
 TODO
 
+add challeges pros cons seamless etc
+
 ## Next Steps
 
 TODO
