@@ -23,7 +23,7 @@ fun main() {
     val athenaUserClicksFetcher = AthenaUserClicksFetcher(
         athenaQueriesOutputBuket = "$s3Bucket/athena-query-results/", table = table, database = glueDB
     )
-    val redshiftLoginAttemptsFetcher = RedshiftUserClicksFetcher(
+    val redshiftUserClicksFetcher = RedshiftUserClicksFetcher(
         redshiftExternalScheme = "test_2",
         redshiftDB = "dev",
         redshiftWorkgroupName = "test-redshift-with-iceberg",
@@ -39,5 +39,5 @@ fun main() {
     awsStorage.store(userClicks)
     sparkUserClicksFetcher.fetch(traceableElementId, parse("2023-01-01"), parse("2023-12-01"), logQueryStats = true)
     athenaUserClicksFetcher.fetch(traceableElementId, parse("2023-01-01"), parse("2023-12-01"), logQueryStats = true)
-    redshiftLoginAttemptsFetcher.fetch(traceableElementId, parse("2023-01-01"), parse("2023-12-01"), logQueryStats = true)
+    redshiftUserClicksFetcher.fetch(traceableElementId, parse("2023-01-01"), parse("2023-12-01"), logQueryStats = true)
 }
