@@ -19,9 +19,9 @@ class SparkUserClicksFetcher(
 ) : UserClicksFetcher {
 
     @OptIn(ExperimentalTime::class)
-    override fun fetch(userId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> { //from to extract measuring (benchmark) component outside Measure Elapsed Time $this->benchmark->elapsed_time('code_start', 'code_end');
+    override fun fetch(elementId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> { //from to extract measuring (benchmark) component outside Measure Elapsed Time $this->benchmark->elapsed_time('code_start', 'code_end');
         val timedValue = measureTimedValue {
-            val query = "select * from $glueDB.$table where time > '$from' AND time < '$to' AND user_id = '$userId'"
+            val query = "select * from $glueDB.$table where time > '$from' AND time < '$to' AND element_id = '$elementId'"
             val rowDataset: Dataset<Row> = spark.sql(query)
             if (logQueryStats) spark.sql(query).explain("cost")
             rowDataset.collectAsList().map {

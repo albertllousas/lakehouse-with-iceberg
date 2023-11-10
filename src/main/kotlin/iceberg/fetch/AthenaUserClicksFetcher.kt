@@ -40,11 +40,11 @@ class AthenaUserClicksFetcher(
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS 'UTC'")
 
     @OptIn(ExperimentalTime::class)
-    override fun fetch(userId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> {
+    override fun fetch(elementId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> {
         val timedValue = measureTimedValue {
             val query = """SELECT * FROM $table 
                            WHERE (time between TIMESTAMP '$from 00:00:00' AND TIMESTAMP '$to 00:00:00') 
-                                 AND user_id = '$userId'"""
+                                 AND element_id = '$elementId'"""
             val queryExecutionId = submitAthenaQuery(query)
             val stats = waitForQueryToComplete(queryExecutionId)
             processResultRows(queryExecutionId)

@@ -37,12 +37,12 @@ class RedshiftUserClicksFetcher(
     private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @OptIn(ExperimentalTime::class)
-    override fun fetch(userId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> {
+    override fun fetch(elementId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> {
         val timedValue = measureTimedValue {
             val query = """SELECT * 
                            FROM $redshiftExternalScheme.$table 
                            WHERE (time between TIMESTAMP '$from 00:00:00' AND TIMESTAMP '$to 00:00:00') 
-                                  AND user_id = '$userId';"""
+                                  AND element_id = '$elementId';"""
             val queryExecutionId = submitRedshiftQuery(query)
             waitForQueryToComplete(queryExecutionId)
             processResultRows(queryExecutionId)
