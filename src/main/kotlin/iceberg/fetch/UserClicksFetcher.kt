@@ -6,5 +6,5 @@ import java.util.UUID
 
 interface UserClicksFetcher {
 
-    fun fetch(userId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean = true): List<UserClick>
+    fun fetch(elementId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean = true): List<UserClick>
 }
