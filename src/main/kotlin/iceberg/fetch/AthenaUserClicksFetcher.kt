@@ -37,7 +37,7 @@ class AthenaUserClicksFetcher(
 
     private val resultConfiguration = ResultConfiguration.builder().outputLocation(athenaQueriesOutputBuket).build()
 
-    private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS 'UTC'")
+    private val dateFmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.SSSSSS")// 'UTC'")
 
     @OptIn(ExperimentalTime::class)
     override fun fetch(elementId: UUID, from: LocalDate, to: LocalDate, logQueryStats: Boolean): List<UserClick> {
@@ -99,7 +99,7 @@ class AthenaUserClicksFetcher(
                     UserClick(
                         event_id = row.getAsString("event_id", columns),
                         user_id = row.getAsString("user_id", columns),
-                        device_id = row.getAsString("device_token", columns),
+                        device_id = row.getAsString("device_id", columns),
                         element_id = row.getAsString("element_id", columns),
                         latitude = row.getAsString("latitude", columns),
                         longitude = row.getAsString("longitude", columns),

@@ -7,6 +7,7 @@ import org.apache.spark.sql.SparkSession
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.UUID
 import kotlin.time.ExperimentalTime
 import kotlin.time.measureTimedValue
@@ -28,12 +29,12 @@ class SparkUserClicksFetcher(
                 UserClick(
                     event_id = it.getString(it.fieldIndex("event_id")),
                     user_id = it.getString(it.fieldIndex("user_id")),
-                    device_id = it.getString(it.fieldIndex("device_token")),
+                    device_id = it.getString(it.fieldIndex("device_id")),
                     element_id = it.getString(it.fieldIndex("element_id")),
                     latitude = it.getString(it.fieldIndex("latitude")),
                     longitude = it.getString(it.fieldIndex("longitude")),
                     country = it.getString(it.fieldIndex("country")),
-                    time = it.getTimestamp(it.fieldIndex("time")).toLocalDateTime(),
+                    time = it.getAs(it.fieldIndex("time")) as LocalDateTime,
                     ip_address = it.getString(it.fieldIndex("ip_address")),
                     city = it.getString(it.fieldIndex("city")),
                     os = it.getString(it.fieldIndex("os")),

@@ -65,21 +65,23 @@ S3 partition strategy: days(time), bucket(128, element_id)
 
 Fetch all user clicks given a element-id within a date range:
 
-| Fetch tool  | Latency (2 months)  |  Data scanned (2 months) | Latency (1 year)  | Data scanned (1 year)  | Comments                                  |
-|---|---|---|---|---|-------------------------------------------|
-|  Athena (sdk client) | ~5/6s  | 18 MB  | ~5/6s  | 68 MB  |                                           |
-| Spark (client)  | 20-40 sec  |  139 MB |  20-40 sec | 223 MB  |                                           |
-| Redshift Spectrum (sdk client)  | ~5/6s  |   | ~7/8s  |   | without redshift serverless with defaults |
+| Fetch tool                     | Latency (2 months) | Data scanned (2 months) | Latency (1 year)  | Data scanned (1 year) | Comments                                  |
+|--------------------------------|--------------------|----------------------|---|-----------------------|-------------------------------------------|
+| Athena (sdk client)            | ~5/6s              | 18 MB                | ~5/6s  | 68 MB                 |                                           |
+| Spark (client)                 | 20-40 sec          | 139 MB               |  20-40 sec | 223 MB                |                                           |
+| Plain iceberg libs             | 30-40 sec          | 150MB                |  20-40 sec | 250 MB                |                                           |
+| Redshift Spectrum (sdk client) | ~5/6s              |                      | ~7/8s  |                       |  redshift serverless with defaults |
 
 
 #### Trade-off analysis
 
 
-| **Fetch tool** | **Pros**                                                                                              | **Cons**                                                                                                                          |       
-|---|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
-| Athena | - Latency (sec) <br/> - Serverless service <br/> - Iceberg seamless integration <br/> - SQL interface | - Potential bottleneck since it is a shared resource ([quotas](https://docs.aws.amazon.com/athena/latest/ug/service-limits.html)) | 
-| Spark | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/> - SQL interface                    | - Latency (min) <br/>                                                                                                             |
-| Redshift Spectrum | - Latency (sec) <br/> - Iceberg seamless integration <br/> - SQL interface                                                                 | - Requires cluster management and cfg <br/> - Extra [cost](https://aws.amazon.com/redshift/pricing/)                                                                      |
+| **Fetch tool**     | **Pros**                                                                                              | **Cons**                                                                                                                          |       
+|--------------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
+| Athena             | - Latency (sec) <br/> - Serverless service <br/> - Iceberg seamless integration <br/> - SQL interface | - Potential bottleneck since it is a shared resource ([quotas](https://docs.aws.amazon.com/athena/latest/ug/service-limits.html)) | 
+| Spark              | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/> - SQL interface                   | - Latency (min) <br/>                                                                                                             |
+| Iceberg plain libs | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/>                  | - Latency (min) <br/> - Ingestion is slow                                                                                         |
+| Redshift Spectrum  | - Latency (sec) <br/> - Iceberg seamless integration <br/> - SQL interface                                                                | - Requires cluster management and cfg <br/> - Extra [cost](https://aws.amazon.com/redshift/pricing/)                              |
 
 
 

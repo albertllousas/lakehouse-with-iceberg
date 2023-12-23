@@ -6,7 +6,7 @@ plugins {
 
 object Versions {
     const val AWSSDK = "2.20.151"
-    const val ICEBERG = "1.3.1"
+    const val ICEBERG = "1.4.2"
     const val SPARK = "3.4.0"
 }
 

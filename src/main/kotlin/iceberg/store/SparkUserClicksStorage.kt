@@ -8,12 +8,12 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 
-class IcebergAWSUserClicksStorage(
+class SparkUserClicksStorage(
         private val spark: SparkSession,
         private val glueDB: String,
         private val table: String,
-        private val logger: Logger = LoggerFactory.getLogger(IcebergAWSUserClicksStorage::class.java)
-) {
+        private val logger: Logger = LoggerFactory.getLogger(SparkUserClicksStorage::class.java)
+): ClicksStorage {
 
     init {
         createGlueTableIfDoesntExists()
@@ -43,7 +43,7 @@ class IcebergAWSUserClicksStorage(
         )
     }
 
-    fun store(userClicks: List<UserClick>) {
+    override fun store(userClicks: List<UserClick>) {
         val data: Dataset<Row> = spark.createDataFrame(userClicks, UserClick::class.java)
         data.writeTo("$glueDB.$table").append()
     }

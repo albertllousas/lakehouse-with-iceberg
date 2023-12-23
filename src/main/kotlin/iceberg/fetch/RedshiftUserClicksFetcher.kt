@@ -83,7 +83,7 @@ class RedshiftUserClicksFetcher(
             UserClick(
                 event_id = fields.getAsString("event_id", columns),
                 user_id = fields.getAsString("user_id", columns),
-                device_id = fields.getAsString("device_token", columns),
+                device_id = fields.getAsString("device_id", columns),
                 element_id = fields.getAsString("element_id", columns),
                 latitude = fields.getAsString("latitude", columns),
                 longitude = fields.getAsString("longitude", columns),
