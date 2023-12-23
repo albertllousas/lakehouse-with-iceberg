@@ -80,7 +80,7 @@ Fetch all user clicks given a element-id within a date range:
 |--------------------|-------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------|
 | Athena             | - Latency (sec) <br/> - Serverless service <br/> - Iceberg seamless integration <br/> - SQL interface | - Potential bottleneck since it is a shared resource ([quotas](https://docs.aws.amazon.com/athena/latest/ug/service-limits.html)) | 
 | Spark              | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/> - SQL interface                   | - Latency (min) <br/>                                                                                                             |
-| Iceberg plain libs | - Direct connection to S3 buckets (no middlewares to manage) <br/> - Iceberg seamless integration <br/>                  | - Latency (min) <br/> - Ingestion is slow                                                                                         |
+| Iceberg plain libs | - Direct connection to S3 buckets (no middlewares to manage) <br/>                 | - Latency (min) <br/> - Ingestion is slow - No SQL                                                                                |
 | Redshift Spectrum  | - Latency (sec) <br/> - Iceberg seamless integration <br/> - SQL interface                                                                | - Requires cluster management and cfg <br/> - Extra [cost](https://aws.amazon.com/redshift/pricing/)                              |
 
 
